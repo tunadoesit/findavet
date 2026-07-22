@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowUpRight, Car, ChevronDown, Heart, Languages, List,
-  Map, MapPin, Search, SlidersHorizontal, Star, TrainFront, X
+  Map, MapPin, Phone, Search, SlidersHorizontal, Star, TrainFront, X
 } from 'lucide-react';
 import { vets } from '../lib/vets';
 
@@ -27,6 +27,7 @@ const positions = [
 
 const transport = ['Βικτώρια · 8 λεπτά', 'Ευαγγελισμός · 11 λεπτά', 'Συγγρού-Φιξ · 4 λεπτά', 'Χαλάνδρι · 7 λεπτά', 'Τροκαντερό · 5 λεπτά', 'Νέος Κόσμος · 3 λεπτά'];
 const parking = ['Στάθμευση στον δρόμο', 'Ιδιωτικό πάρκινγκ', 'Περιορισμένη στάθμευση', 'Δωρεάν πάρκινγκ', 'Στάθμευση στον δρόμο', 'Πάρκινγκ με χρέωση κοντά'];
+const phones = ['+302100000001', '+302100000002', '+302100000003', '+302100000004', '+302100000005', '+302100000006'];
 const areaAliases = {
   Kypseli: ['κυψέλη', 'κυψελη', 'kypseli', 'kipseli'],
   Pangrati: ['παγκράτι', 'παγκρατι', 'pangrati'],
@@ -54,7 +55,7 @@ function ResultCard({ vet, index, selected, onSelect }) {
         <span><Car/>{parking[index]}</span>
         <span><Languages/>{vet.languages.slice(0,2).map(x => greek[x]).join(' · ')}</span>
       </div>
-      <div className="search-price"><Link href={`/vets/${vet.slug}`}>Προβολή κλινικής <ArrowUpRight size={15}/></Link></div>
+      <div className="search-price"><a className="call-clinic" href={`tel:${phones[index]}`}><Phone size={14}/> Κλήση</a><Link href={`/vets/${vet.slug}`}>Προβολή κλινικής <ArrowUpRight size={15}/></Link></div>
     </div>
   </article>
 }
@@ -94,7 +95,7 @@ export default function SearchExperience() {
         {Array.from({length: 9}).map((_,i) => <span className={`road road-${i+1}`} key={i}></span>)}
         <div className="map-label label-centre">ΑΘΗΝΑ</div><div className="map-label label-north">ΧΑΛΑΝΔΡΙ</div><div className="map-label label-south">ΝΕΟΣ ΚΟΣΜΟΣ</div>
         <button className="map-search"><Search size={15}/> Αναζήτηση σε αυτή την περιοχή</button>
-        {shown.map(vet => { const index = vets.indexOf(vet); return <button key={vet.slug} aria-label={vet.name} style={positions[index]} onClick={() => setSelected(index)} className={`price-marker clinic-marker ${selected === index ? 'selected' : ''}`}>{greek[vet.name]}</button> })}
+        {shown.map(vet => { const index = vets.indexOf(vet); return <button key={vet.slug} aria-label={`${vet.name} · ${vet.open ? 'Ανοιχτά' : 'Κλειστά'}`} data-open={vet.open ? 'true' : 'false'} style={positions[index]} onClick={() => setSelected(index)} className={`price-marker clinic-marker ${selected === index ? 'selected' : ''}`}>{greek[vet.name]}</button> })}
         <div className="map-key"><span></span> Επιλεγμένη κλινική</div>
       </aside>
     </div>
