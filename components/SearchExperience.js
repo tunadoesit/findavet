@@ -14,9 +14,9 @@ const greek = {
   'Seaside Vet': 'Seaside Vet', 'Little Creatures': 'Little Creatures',
   Kypseli: 'Κυψέλη', Pangrati: 'Παγκράτι', Koukaki: 'Κουκάκι',
   Chalandri: 'Χαλάνδρι', 'Palaio Faliro': 'Παλαιό Φάληρο', 'Neos Kosmos': 'Νέος Κόσμος',
-  'Home visits': 'Κατ’ οίκον', 'Cats & dogs': 'Σκύλοι & γάτες',
+  'Cat-friendly': 'Φιλικό προς γάτες', 'Cats & dogs': 'Σκύλοι & γάτες',
   Emergency: 'Επείγοντα', Surgery: 'Χειρουργείο', 'Exotic pets': 'Εξωτικά ζώα',
-  Dental: 'Οδοντιατρική', Imaging: 'Απεικόνιση', Rabbits: 'Κουνέλια',
+  Dental: 'Οδοντιατρική', Imaging: 'Απεικόνιση', Rabbits: 'Κουνέλια', 'Wheelchair accessible': 'Πρόσβαση ΑμεΑ',
   Greek: 'Ελληνικά', English: 'Αγγλικά', French: 'Γαλλικά', German: 'Γερμανικά',
 };
 
@@ -49,7 +49,7 @@ function ResultCard({ vet, index, selected, onSelect }) {
         <div><p><MapPin size={13}/>{greek[vet.area]}</p><h2>{greek[vet.name]}</h2></div>
         <span className="search-rating"><Star size={13} fill="currentColor"/> {vet.rating} <small>({vet.reviews})</small></span>
       </div>
-      <div className="search-tags">{vet.tags.slice(0,2).map(tag => <span key={tag}>{greek[tag]}</span>)}</div>
+      <div className="search-tags">{vet.tags.slice(0,3).map(tag => <span key={tag}>{greek[tag]}</span>)}</div>
       <div className="search-facts">
         <span><TrainFront/>{transport[index]}</span>
         <span><Car/>{parking[index]}</span>
@@ -80,7 +80,7 @@ export default function SearchExperience() {
     <label className="mobile-area-search"><Search size={18}/><input value={area} onChange={event => setArea(event.target.value)} placeholder="Περιοχή, π.χ. Κυψέλη" aria-label="Αναζήτηση περιοχής για κινητό"/>{area && <button type="button" onClick={() => setArea('')} aria-label="Καθαρισμός αναζήτησης"><X size={15}/></button>}</label>
     <section className="filterbar">
       <button onClick={() => setActive(active === 'open' ? '' : 'open')} className={active === 'open' ? 'active' : ''}>Ανοιχτά τώρα</button>
-      <button>Επείγοντα</button><button>Κατ’ οίκον</button><button>Εξωτικά ζώα</button><button>Γλώσσες <ChevronDown size={13}/></button>
+      <button>Επείγοντα</button><button>Εξωτικά ζώα</button><button>Γλώσσες <ChevronDown size={13}/></button>
       <button className="all-filters"><SlidersHorizontal size={15}/> Όλα τα φίλτρα</button>
     </section>
     <div className="mobile-switch"><button className={mode === 'list' ? 'active' : ''} onClick={() => setMode('list')}><List/> Λίστα</button><button className={mode === 'map' ? 'active' : ''} onClick={() => setMode('map')}><Map/> Χάρτης</button></div>

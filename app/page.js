@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import VetCard from '../components/VetCard';
 import {vets} from '../lib/vets';
 
-const filters=['Open now','Home visits','English-speaking','Emergency','Exotic pets','Parking'];
+const filters=['Open now','English-speaking','Emergency','Exotic pets','Parking'];
 export default function Home(){
  const [query,setQuery]=useState(''); const [active,setActive]=useState('');
  const shown=useMemo(()=>vets.filter(v=>{const q=query.toLowerCase();const match=!q||`${v.name} ${v.area} ${v.tags.join(' ')} ${v.languages.join(' ')}`.toLowerCase().includes(q);const f=!active||(active==='Open now'?v.open:active==='English-speaking'?v.languages.includes('English'):active==='Parking'?v.parking.toLowerCase().includes('parking'):v.tags.includes(active));return match&&f}),[query,active]);
